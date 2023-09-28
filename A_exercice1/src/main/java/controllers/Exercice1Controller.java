@@ -1,6 +1,7 @@
 package controllers;
 
 import dtos.UserDto;
+import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import services.Facade;
+
+import java.util.List;
 
 @Controller
 @SessionAttributes("courant")
@@ -34,6 +37,8 @@ public class Exercice1Controller {
             // on place courant dans le modèle, mais il s'agit d'un attribut de session, il se retrouve ainsi conservé en session
             model.addAttribute("courant", userDto.getLogin());
             model.addAttribute("username", userDto.getLogin());
+            List<User> users = facade.getAllUsers();
+            model.addAttribute("users", users);
             return "welcome";
         } else {
             // on crée à la volée un "ObjectError" : erreur globale dans l'objet (ici l'objet c'est l'instance de user où transitent les infos de login)
@@ -58,6 +63,15 @@ public class Exercice1Controller {
         model.addAttribute(new UserDto());
         return "login";
     }
+
+    @RequestMapping("allUsers")
+    public String getAllUsers(Model model) {
+        List<User> users = facade.getAllUsers();
+        model.addAttribute("users", users);
+        return "welcome"; // Assurez-vous que vous retournez la vue "welcome"
+
+    }
+
 
     @RequestMapping("fromlayout")
     public String fromLayout(){

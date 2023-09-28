@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Service
 public class Facade {
@@ -34,6 +36,12 @@ public class Facade {
             return (user.getPassword().equals(password));
         }
    }
+
+    public List<User> getAllUsers() {
+        // Créer une requête JPA pour récupérer tous les utilisateurs
+        TypedQuery<User> query = em.createQuery("FROM User u", User.class);
+        return query.getResultList();
+    }
 
 
 }

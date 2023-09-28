@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bienvenue</title>
@@ -8,7 +8,7 @@
 Bienvenue, <span th:text="${username}"/>.
 
 <form th:action="@{/logout}">
-    <button type="submit">se déconnecter</button>
+    <button type="submit">Se déconnecter</button>
 </form>
 
 <form th:action="@{/simplecheck}">
@@ -16,6 +16,23 @@ Bienvenue, <span th:text="${username}"/>.
 </form>
 
 <div th:replace="session::session"></div>
+
+<!-- Afficher la liste des utilisateurs -->
+<h2>Liste des Utilisateurs</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Login</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.login}"></td>
+        <td th:text="${user.password}"></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>
